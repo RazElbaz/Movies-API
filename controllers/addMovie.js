@@ -8,22 +8,13 @@ const addMovie = async (req, res) => {
     const { movie_name, info, rating, description } = req.body;
 
     // validations
-    try{
-        if(!movie_name) throw "Movie name must be provided";
-        if(!info) throw "Info must be provided";
-        if(!rating) throw "Rating must be provided";
-        if(rating < 1 || rating > 10) throw "Rating must be between 1-10";
-    } 
-    catch(e){
-        res.status(400).json({
-            status: "failed",
-            message: e
-        });
-        return;
-    }
+    if(!movie_name) throw "Movie name must be provided";
+    if(!info) throw "Info must be provided";
+    if(!rating) throw "Rating must be provided";
+    if(rating < 1 || rating > 10) throw "Rating must be between 1-10";
+   
     
     //success!
-    try{
     const createdMovie = await moviesModel.create({
         movie_name: movie_name,
         info: info,
@@ -31,15 +22,6 @@ const addMovie = async (req, res) => {
         description: description
     });
 
-    console.log(createdMovie);
-    } catch(e){
-        res.status(400).json({
-            status: "failed",
-            message: e.message
-        });
-        return;
-    }
-    
     res.status(200).json({
         status: "success",
         message: "Movie added successfully!"

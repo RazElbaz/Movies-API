@@ -8,33 +8,17 @@ const deleteMovie = async (req, res) => {
         _id: movie_id,
     });
 
-    try{
-        if(!getMovie) throw "This movie does not exist!";
-    } catch(e){
-        res.status(400).json({
-            status: "failed",
-            message: e
-        })
-        return;
-    }
-    
+   
+    if(!getMovie) throw "This movie does not exist!";
+   
+    await moviesModel.deleteOne({
+      _id: movie_id,
+    });
 
-    try {
-        await moviesModel.deleteOne({
-          _id: movie_id,
-        });
-    
-        res.status(200).json({
-            status: "success",
-            message: "Movie deleted successfully!"
-          });
-      } catch (e) {
-        res.status(400).json({
-          status: "failed",
-          message: e.message,
-        });
-        return;
-      }
-    };
+    res.status(200).json({
+        status: "success",
+        message: "Movie deleted successfully!"
+    });
+  };
 
 module.exports = deleteMovie;
