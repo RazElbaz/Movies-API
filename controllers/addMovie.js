@@ -24,6 +24,7 @@ const addMovie = async (req, res) => {
     }
     
     //success!
+    try{
     const createdMovie = await moviesModel.create({
         movie_name: movie_name,
         info: info,
@@ -31,7 +32,14 @@ const addMovie = async (req, res) => {
     });
 
     console.log(createdMovie);
-
+    } catch(e){
+        res.status(400).json({
+            status: "failed",
+            message: "Movie creation failed. Something went wrong."
+        });
+        return;
+    }
+    
     res.status(200).json({
         status: "success",
         message: "Movie added successfully!"
