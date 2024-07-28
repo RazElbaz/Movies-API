@@ -22,11 +22,12 @@ mongoose
 
 const app = express();
 
-
+app.use(express.json());
+//Models ..
 require("./models/movies.model");
 
-// Routes .. 
 
+//Routes .. 
 app.post("/api/movies", addMovie);
 
 
