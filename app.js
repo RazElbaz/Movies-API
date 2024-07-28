@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const getAllMovies = require("./controllers/getAllMovies");
 const getSingleMovie = require("./controllers/getSingleMovie");
 const editMovie = require("./controllers/editMovie");
+const deleteMovie = require("./controllers/deleteMovie");
 
 
 // connecting to mongoDB
@@ -34,7 +35,9 @@ require("./models/movies.model");
 app.post("/api/movies", addMovie);
 app.get("/api/movies", getAllMovies);
 app.get("/api/movies/:movie_id", getSingleMovie);
-app.patch("/api/movies/", editMovie);
+app.patch("/api/movies", editMovie);
+
+app.delete("/api/movies/:movie_id", deleteMovie);
 
 app.listen(8000, () => {
     console.log("Server started successfully!");
