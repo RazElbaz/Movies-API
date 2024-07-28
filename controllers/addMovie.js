@@ -1,4 +1,10 @@
-const addMovie = (req, res) => {
+const mongoose = require("mongoose");
+
+
+const addMovie = async (req, res) => {
+
+    const moviesModel = mongoose.model("movies");
+
     const { movie_name, info, rating } = req.body;
 
     // validations
@@ -17,8 +23,15 @@ const addMovie = (req, res) => {
         return;
     }
     
-
     //success!
+    const createdMovie = await moviesModel.create({
+        movie_name: movie_name,
+        info: info,
+        rating: rating
+    });
+
+    console.log(createdMovie);
+
     res.status(200).json({
         status: "success",
         message: "Movie added successfully!"
