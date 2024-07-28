@@ -5,10 +5,9 @@ const addMovie = async (req, res) => {
 
     const moviesModel = mongoose.model("movies");
 
-    const { movie_name, info, rating } = req.body;
+    const { movie_name, info, rating, description } = req.body;
 
     // validations
-
     try{
         if(!movie_name) throw "Movie name must be provided";
         if(!info) throw "Info must be provided";
@@ -28,14 +27,15 @@ const addMovie = async (req, res) => {
     const createdMovie = await moviesModel.create({
         movie_name: movie_name,
         info: info,
-        rating: rating
+        rating: rating,
+        description: description
     });
 
     console.log(createdMovie);
     } catch(e){
         res.status(400).json({
             status: "failed",
-            message: "Movie creation failed. Something went wrong."
+            message: e.message
         });
         return;
     }
